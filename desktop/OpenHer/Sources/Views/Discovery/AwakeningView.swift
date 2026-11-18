@@ -33,14 +33,14 @@ struct AwakeningView: View {
         let desc = persona.description ?? L10n.str("标准模式", en: "Standard")
         let tagStr = PersonaCard.localizedTags(persona).prefix(3).map { "#\($0)" }.joined(separator: " ")
 
-        return [
-            L10n.str("正在初始化神经通路...", en: "Initializing neural pathways..."),
-            L10n.str("灌入记忆数据...", en: "Loading memory data..."),
-            L10n.str("设定性格参数: ", en: "Setting personality: ") + mbti,
-            L10n.str("情感基线校准: ", en: "Calibrating emotion baseline: ") + desc,
-            L10n.str("共振标签注入: ", en: "Injecting resonance tags: ") + tagStr,
-            L10n.str("启动意识核心...", en: "Booting consciousness core..."),
-        ]
+    return [
+        L10n.str("Initializing neural pathways...", en: "Initializing neural pathways..."),
+        L10n.str("Loading memory data...", en: "Loading memory data..."),
+        L10n.str("Setting personality: ", en: "Setting personality: ") + mbti,
+        L10n.str("Calibrating emotion baseline: ", en: "Calibrating emotion baseline: ") + desc,
+        L10n.str("Injecting resonance tags: ", en: "Injecting resonance tags: ") + tagStr,
+        L10n.str("Booting consciousness core...", en: "Booting consciousness core..."),
+]
     }
 
     var body: some View {
