@@ -1,8 +1,8 @@
 """
-SoulMem Provider — 行为记忆 (指导怎么做).
+SoulMem Provider — Behavioral Memory (guides how to act).
 
-SQLite FTS5 本地记忆存储。常驻层，总是启用。
-当前阶段仅定义接口，facade (memory_store.py) 保留不动。
+Local memory storage using SQLite FTS5. A persistent layer that is always enabled.
+This stage only defines the interface; the facade (memory_store.py) remains unchanged.
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from .types import Memory
 
 
 class BaseSoulMem(ABC):
-    """SoulMem 行为记忆接口 — 常驻层."""
+    """SoulMem behavioral-memory interface — persistent layer."""
 
     @abstractmethod
     def add(
