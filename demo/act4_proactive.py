@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-幕4: 她主动找你 — 用户沉默，AI 先开口
-========================================
-证明: 不是你问她才答，是她真的想联系你
+Act 4: She Reaches Out First — The user goes quiet, and the AI speaks first
+===========================================================================
+Proof: She doesn't just reply when you ask; she genuinely wants to get in touch.
 
-操作: 注入高挫败 → 时间跳跃 +24h → 等待主动消息
+操作: Inject high frustration → jump forward 24 hours → wait for a proactive message
 """
 import asyncio, sys, os
 sys.path.insert(0, os.path.dirname(__file__))
@@ -12,37 +12,37 @@ import websockets
 from demo_utils import *
 
 async def act4():
-    preflight("幕4: 主动消息")
+    preflight("Act 4: Proactive Message")
 
     async with websockets.connect(WS_URL) as ws:
         await drain(ws)
 
-        log("═══ 幕4: 她主动找你 ═══", "用户沉默，AI 先开口")
-        await set_title("她主动找你")
-        await switch_tab(4)  # Tab 4: 关系/联结驱动
+        log("═══ Act 4: She Reaches Out First ═══", "The user goes quiet, and the AI speaks first")
+        await set_title("She Reaches Out First")
+        await switch_tab(4)  # Tab 4: Relationship/connection-driven
 
         await switch_persona(ws, "luna")
         pause(2)
 
-        # 注入高挫败
-        await apply_scenario(ws, "about_to_snap", "💥 即将爆发")
-        pause(3, "观众看挫败值跳变 + 温度飙升")
+        # Inject high frustration
+        await apply_scenario(ws, "about_to_snap", "💥 About to Snap")
+        pause(3, "Let the audience see frustration spike + temperature soar")
 
-        # 时间跳跃
+        # Jump forward in time
         log_pos = await time_jump(ws, 24)
-        pause(2, "沉默…什么都不做")
+        pause(2, "Silence… do nothing")
 
-        # 等待主动消息（只等一次，不重试以避免连发两条）
+        # Wait for a proactive message (only wait once, to avoid sending two messages in a row)
         reply = await wait_proactive(ws, log_pos_before=log_pos)
         if reply:
-            pause(8, "★ 最强截图 — 主动消息 + 独白 + 面板同框")
+            pause(8, "★ Best screenshot — proactive message + inner monologue + dashboard all in frame")
         else:
-            log("⚠️ 未触发主动消息 — 可手动展示")
+            log("⚠️ No proactive message triggered — you can demonstrate it manually")
             pause(3)
 
-        log("✅ 幕4完成", "她先开口了")
+        log("✅ Act 4 complete", "She spoke first")
 
-    save_results("幕4_主动消息")
+    save_results("Act4_Proactive_Message")
 
 if __name__ == "__main__":
     asyncio.run(act4())
