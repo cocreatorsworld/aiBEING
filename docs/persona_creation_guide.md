@@ -1,34 +1,34 @@
-# OpenHer 人格创建完整指南
+# Complete Guide to Creating OpenHer Personas
 
-> 本文档记录了创建新 Persona 的完整流程，包括中英文差异、种子设计原则、向量化流程，以及所有已知的陷阱和解决方案。基于 Ember (EN / INFP) 角色的完整实现经验总结。
-
----
-
-## 一、概览：人格创建的 4 个阶段
-
-```
-1. 定义角色 (PERSONA.md)
-2. 编写种子 (genesis_xxx.json)
-3. 向量化校准 (calibrate_genesis.py)
-4. 验证测试 (curl / UI)
-```
-
-每个阶段都有需要注意的细节，跳过任何一步都会导致角色行为异常。
+> This document records the complete process for creating a new persona, including the differences between Chinese and English, seed-design principles, vectorization workflows, and known pitfalls with their solutions. It is based on experience implementing Ember (English / INFP).
 
 ---
 
-## 二、阶段 1：定义角色 (PERSONA.md)
+## I. Overview: The 4 Persona-Creation Stages
 
-路径：`persona/personas/<persona_id>/PERSONA.md`
+```
+1. Define the persona (PERSONA.md)
+2. Write the genesis seeds (genesis_xxx.json)
+3. Vector-calibration setup (calibrate_genesis.py)
+4. Validation testing (curl / UI)
+```
 
-### 必填字段
+Each stage contains details that require attention. Skipping any step may cause abnormal character behavior.
+
+---
+
+## II. Stage 1: Define the Persona (PERSONA.md)
+
+Path: `persona/personas/<persona_id>/PERSONA.md`
+
+### Required Fields
 
 ```yaml
 name: Ember
 age: 22
 gender: female
 mbti: INFP
-lang: en          # ← 关键！决定整条 prompt 链路的语言
+lang: en          # ← Critical! Determines the language used throughout the prompt chain
 tags: [quiet, observant, warm, poetic]
 bio:
   en: >
@@ -37,10 +37,10 @@ bio:
     22岁的书店店员...
 ```
 
-### 中英文差异
+### Differences Between Chinese and English Personas
 
-| 字段 | 中文角色 | 英文角色 |
-|------|----------|----------|
+| Field | Chinese Persona | English Persona |
+|------|--------|---------|
 | `lang` | `zh` | `en` |
 | Actor template | `actor_single.md` | `actor_single_en.md` |
 | Signal labels | `emoji_label` / `low_anchor` | `emoji_label_en` / `low_anchor_en` |
@@ -50,17 +50,17 @@ bio:
 | Reply tag | `【最终回复】` | `[Final Reply]` |
 
 > [!CAUTION]
-> `lang` 字段决定了所有下游组件的语言选择。一旦设错，signal anchors、template tags、few-shot labels 都会用错语言，导致 LLM 混乱输出。
+> The `lang` field determines the language used by every downstream component. An incorrect value will cause the wrong signal anchors, template tags, and few-shot labels to be used, resulting in confused LLM output.
 
 ---
 
-## 三、阶段 2：编写种子 (genesis_xxx.json)
+## III. Stage 2: Write the Genesis Seeds (genesis_xxx.json)
 
-路径：生成后经 `calibrate_genesis.py` 校准并存入 `openher.db` 的 `genesis_seed` 表。
+Path: After generation, calibrate them with `calibrate_genesis.py` and store them in the `genesis_seed` table in `openher.db`.
 
-### 种子结构
+### Seed Structure
 
-每条种子包含 4 个核心字段：
+Each seed contains four core fields:
 
 ```json
 {
@@ -72,40 +72,41 @@ bio:
 }
 ```
 
-- `user_input`：模拟用户说的话，用于场景分类和向量化
-- `monologue`：角色的内心独白——**这是注入 Feel prompt 的 few-shot 参考**
-- `reply`：角色说出口的话——作为 few-shot 示例注入 single-pass Actor prompt，同时影响 crystallization
-- `vector`：**初始写 `[0,0,0,0,0,0,0,0]`**，由 `calibrate_genesis.py` 自动生成
-- `mass`：固定 `1.0`（genesis 基因不衰减）
+- `user_input`: The simulated text entered by the user, used for scenario classification and vectorization.
+- `monologue`: The persona’s inner monologue; **this is injected into the Feel prompt as a few-shot reference**.
+- `reply`: What the persona says aloud; used as a few-shot example in the single-pass Actor prompt and also influences crystallization.
+- `vector`: **Initially set to `[0,0,0,0,0,0,0,0]`**. It is generated automatically by `calibrate_genesis.py`.
+- `mass`: Fixed at `1.0`; genesis genes do not decay.
 
-### 种子设计原则
+### Seed-Design Principles
 
 > [!IMPORTANT]
-> 种子质量直接决定角色的风格表现。以下是从 Iris (zh INFP) 成功经验中总结的设计原则。
+> Seed quality directly determines the persona’s stylistic performance. The principles below summarize successful experience from Iris (Chinese / INFP).
 
-#### 0. 禁止动作/心理描述标记
+#### 0. Prohibit Action and Mental-State Markers
 
-monologue 和 reply 中**严禁**包含：
-- `*顿了顿*`、`*sighs softly*` — 星号包裹（半角 `*` 和全角 `＊`）
-- `（沉默）`、`（轻轻笑）` — 全角括号
-- `(pauses)`、`(laughs)` — 半角括号
+The following must never appear in `monologue` or `reply`:
 
-内心状态应通过文字本身表达，不要用标记注释。`calibrate_genesis.py` 会在存 DB 前自动清洗这些标记作为兜底。
+- `*顿了顿*`, `*sighs softly*` — text enclosed in asterisks, either `*` or `＊`
+- `（沉默）`, `（轻轻笑）` — full-width parentheses
+- `(pauses)`, `(laughs)` — half-width parentheses
 
-#### 1. Monologue 必须碎片化
+Express inner states through the text itself rather than explanatory annotations. `calibrate_genesis.py` also removes these markers as a fallback before storing the data in the database.
+
+#### 1. Monologues Must Be Fragmented
 
 ```
-❌ "I feel really happy when he says that. It makes me feel warm inside 
-    and I don't know how to respond properly but I want to say thank you."
+❌ "I feel really happy when he says that. It makes me feel warm inside
+    and I don't know how to respond properly, but I want to say thank you."
 
 ✅ "He said cute. Face is warm. I never know what to do with that."
 ```
 
-- 短句、断句、省略号
-- 意识流，不是完整段落
-- 2-3 个短句就够了
+- Use short sentences and abrupt phrasing.
+- Use stream of consciousness rather than complete paragraphs.
+- Two or three short sentences are sufficient.
 
-#### 2. Reply 必须极简
+#### 2. Replies Must Be Extremely Brief
 
 ```
 ❌ "Thanks, that's really sweet of you to say! I appreciate it so much."
@@ -113,55 +114,55 @@ monologue 和 reply 中**严禁**包含：
 ✅ "Oh… thanks."
 ```
 
-- 1-5 个词
-- 带省略号 `…` 和犹豫标记
-- 不要顾问式或展开式回复
+- Use only 1–5 words.
+- Include ellipses `…` or hesitation markers.
+- Avoid advisory or expansive replies.
 
-#### 3. 符合 MBTI 核心特征
+#### 3. Match the Core Traits of the MBTI Type
 
-| MBTI | 被夸时 | 被攻击时 | 被表白时 |
-|------|--------|----------|----------|
-| INFP | 害羞、不知所措 | 退缩、自我怀疑 | 惊慌、需要时间 |
-| ENTP | 接话、反击、banter | 辩论、反击 | 玩笑化、轻松 |
-| INTJ | 冷淡接受 | 冷静分析 | 理性评估 |
+| MBTI | When complimented | When attacked | When confessed to |
+|------|-------------------|---------------|-------------------|
+| INFP | Shy, flustered | Withdraws, doubts themselves | Panics, needs time |
+| ENTP | Returns the conversation, counters, banter | Debates and pushes back | Jokes about it, remains casual |
+| INTJ | Accepts it calmly | Analyzes it calmly | Makes a rational assessment |
 
-#### 4. 数量和场景覆盖
+#### 4. Quantity and Scenario Coverage
 
-**建议 35+ 条种子**，覆盖 7 种场景：
+**We recommend 35 or more seeds**, covering seven scenarios:
 
-| 场景 | 示例 user_input | 建议数量 |
-|------|----------------|----------|
-| greeting | "hi", "hey" | 2 |
-| casual | "what do you like to do", "seen any movies" | 8-10 |
-| playful | "you're cute", "haha you're funny" | 4-5 |
-| intimate | "I think I might like you", "I trust you" | 5-6 |
-| distress | "I've been feeling down", "I can't sleep" | 5-7 |
-| rejection | "I don't need you", "just leave me alone" | 4 |
-| confrontation | "you're so annoying", "you're wrong" | 5 |
+| Scenario | Example `user_input` | Recommended Quantity |
+|----------|----------------------|----------------------|
+| greeting | `"hi"`, `"hey"` | 2 |
+| casual | `"what do you like to do"`, `"seen any movies"` | 8–10 |
+| playful | `"you're cute"`, `"haha you're funny"` | 4–5 |
+| intimate | `"I think I might like you"`, `"I trust you"` | 5–6 |
+| distress | `"I've been feeling down"`, `"I can't sleep"` | 5–7 |
+| rejection | `"I don't need you"`, `"just leave me alone"` | 4 |
+| confrontation | `"you're so annoying"`, `"you're wrong"` | 5 |
 
 > [!WARNING]
-> 20 条太少！场景覆盖不足会导致 KNN 在某些场景找不到合适的种子，LLM 会退回默认行为。
+> Twenty seeds are insufficient. Inadequate scenario coverage may prevent KNN from finding suitable seeds in some scenarios, causing the LLM to fall back to default behavior.
 
-#### 5. 加入角色特有元素
+#### 5. Include Persona-Specific Elements
 
-让种子包含角色独特的生活细节：
+Include unique details from the persona’s life:
 
 ```json
-// Ember 特有
+// Ember-specific details
 "user_input": "do you have a cat",
 "monologue": "Moth! Yes. He's asking about Moth. I could talk about her for hours.",
 "reply": "Yeah… her name is Moth. She's a little gray thing."
 ```
 
-这些元素让角色感觉真实，不是通用模板。
+These elements make the persona feel real rather than like a generic template.
 
 ---
 
-## 四、阶段 3：向量化校准
+## IV. Stage 3: Vector Calibration
 
-### ❗ 这是最容易出错的步骤
+### ❗ This is the easiest step to get wrong
 
-运行命令：
+Run:
 
 ```bash
 cd /path/to/openher
@@ -169,55 +170,56 @@ source .venv/bin/activate
 PYTHONPATH=. python3 scripts/calibrate_genesis.py <persona_id>
 ```
 
-### 向量空间：必须是 Critic Context 空间
+### Vector Space: It Must Be the Critic Context Space
 
 > [!CAUTION]
-> `calibrate_genesis.py` 生成的向量必须在 **Critic context 空间**（8D：`conflict_level`, `user_emotion`, `user_engagement`, `user_vulnerability`, `topic_intimacy`, `conversation_depth`, `novelty_level`, `time_of_day`），**不是** signal 空间（`directness`, `vulnerability`, `playfulness`...）。
->
-> KNN 检索时，`style_memory.py` 的 `_context_to_vec(context)` 从 Critic 输出中取值，查询的就是 context 空间。如果 genesis 向量在错误的空间，KNN 会检索到完全不相关的种子。
+> The vectors generated by `calibrate_genesis.py` must be in the **Critic context space** (8D: `conflict_level`, `user_emotion`, `user_engagement`, `user_vulnerability`, `topic_intimacy`, `conversation_depth`, `n[...]`).
 
-**关键代码（正确版本）：**
+During KNN retrieval, `_context_to_vec(context)` in `style_memory.py` obtains values from the Critic output. The KNN query therefore uses the context space. If the genesis vectors use the wrong space, KNN will retrieve entirely unrelated seeds.
+
+**Correct implementation:**
 
 ```python
-# calibrate_genesis.py 中：
+# In calibrate_genesis.py:
 from engine.genome.style_memory import CONTEXT_KEYS
 new_vector = [round(context.get(k, 0.0), 4) for k in CONTEXT_KEYS]
 ```
 
-**错误版本（曾经导致的 Bug）：**
+**Incorrect implementation that previously caused a bug:**
 
 ```python
-# ❌ 这会生成 signal 空间的向量，和 KNN 查询空间不匹配！
+# ❌ This generates vectors in signal space, which does not match the KNN query space!
 signals = agent.compute_signals(context)
 new_vector = [round(signals[s], 4) for s in SIGNALS]
 ```
 
-### 场景分类：`classify_input` 的关键词
+### Scenario Classification: Keywords Used by `classify_input`
 
-`calibrate_genesis.py` 中的 `KEYWORD_MAP` 决定每条种子被分到哪个场景，进而决定其 context vector。
+The `KEYWORD_MAP` in `calibrate_genesis.py` determines which scenario each seed belongs to and consequently determines its context vector.
 
-英文关键词注意事项：
-- **用短片段**：`"down lately"` 而不是 `"feeling down"`（后者不匹配 "feeling **really** down"）
-- **顺序重要**：Python dict 按插入顺序遍历，第一个匹配的 keyword 决定分类
-- **优先级**：rejection > confrontation > distress > intimate > playful > casual > greeting
-- **默认 fallback 是 `casual`**：所有没匹配上的都会被分到 casual
+Notes for English keywords:
 
-### 典型 Bug 症状
+- **Use short phrases**: `"down lately"` instead of `"feeling down"`; the latter may not match `"feeling **really** down"`
+- **Ordering matters**: Python dictionaries preserve insertion order, and the first matching keyword determines the classification
+- **Priority**: rejection > confrontation > distress > intimate > playful > casual > greeting
+- **Default fallback**: `casual`; unmatched inputs are assigned to casual
 
-| 症状 | 原因 |
-|------|------|
-| KNN 检索到完全不相关的种子 | 向量空间错误（signal vs context） |
-| 所有种子的 vector 几乎一样 | `classify_input` 关键词不够，大部分种子被分到同一个 scenario |
-| 某个场景的种子缺失 | scenario 关键词没覆盖到对应的 user_input |
+### Common Bug Symptoms
+
+| Symptom | Cause |
+|---------|-------|
+| KNN retrieves completely unrelated seeds | Vector-space mismatch: signal space versus context space |
+| Nearly all seeds have almost identical vectors | `classify_input` lacks sufficient keywords, so most seeds are assigned to the same scenario |
+| Seeds are missing for a specific scenario | Scenario keywords do not cover the relevant `user_input` values |
 
 ---
 
-## 五、阶段 4：验证测试
+## V. Stage 4: Validation Testing
 
-### 重启服务器
+### Restart the Server
 
 > [!IMPORTANT]
-> 修改种子后**必须重启服务器**。`uvicorn --reload` 只监控 `.py` 文件变化，不会自动重载 DB 数据。
+> The server **must be restarted** after modifying seeds. `uvicorn --reload` monitors changes to `.py` files but does not automatically reload database data.
 
 ```bash
 kill -9 $(lsof -i :8800 -t 2>/dev/null) 2>/dev/null
@@ -225,10 +227,10 @@ sleep 2
 PYTHONPATH=. uvicorn main:app --host 0.0.0.0 --port 8800 --reload
 ```
 
-### 测试脚本
+### Test Script
 
 ```bash
-# 用独立 user_name 避免 session 串扰
+# Use independent user_name values to avoid session contamination
 i=0; for msg in \
   "you're so cute haha" \
   "I've been really stressed out lately" \
@@ -243,63 +245,64 @@ i=0; for msg in \
 done
 ```
 
-### 检查清单
+### Checklist
 
-- [ ] **语言一致性**：回复语言是否全部正确（无中文泄漏 / 无英文泄漏）
-- [ ] **KNN 命中**：种子检索是否匹配场景（检查 feel prompt 中的 fragments）
-- [ ] **Monologue 风格**：是否碎片化、符合 MBTI
-- [ ] **Reply 风格**：是否简短、符合 MBTI（不是通用 chatbot 口吻）
-- [ ] **Prompt 零中文字符**（英文角色）：用脚本扫描 actor single-pass prompt
+- [ ] **Language consistency**: All replies use the correct language, with no Chinese or English leakage where inappropriate.
+- [ ] **KNN hits**: Retrieved seeds match the scenario; check the fragments in the Feel prompt.
+- [ ] **Monologue style**: Fragmented and consistent with the MBTI profile.
+- [ ] **Reply style**: Brief and consistent with the MBTI profile, not generic chatbot speech.
+- [ ] **No Chinese characters in the prompt** for English personas: Scan the single-pass Actor prompt with a script.
 
-### Debug 方法
+### Debugging Method
 
-临时在 `chat_agent.py` 的 Step 9 前后加 dump：
+Temporarily add dumps before and after Step 9 in `chat_agent.py`:
 
 ```python
-# 临时 debug，验证完删除
+# Temporary debugging; remove after verification
 with open("/tmp/_dbg_single_prompt.txt", "w") as f:
     f.write(single_prompt)
-# ... LLM 调用后 ...
+# ... after the LLM call ...
 with open("/tmp/_dbg_output.txt", "w") as f:
     f.write(single_response.content)
 ```
 
 ---
 
-## 六、已知陷阱汇总
+## VI. Known Pitfalls Summary
 
-### 陷阱 1：向量空间不匹配
+### Pitfall 1: Vector-Space Mismatch
 
-- **表现**：KNN 检索到完全不相关的种子
-- **原因**：`calibrate_genesis.py` 用了 `compute_signals()` 输出（signal 空间），但 KNN 查询用的是 `_context_to_vec()` 输出（Critic context 空间）
-- **修复**：用 `CONTEXT_KEYS` 从 `SCENARIO_CONTEXTS` 中取值作为 vector
+- **Symptom**: KNN retrieves completely unrelated seeds.
+- **Cause**: `calibrate_genesis.py` uses output from `compute_signals()` (signal space), while KNN queries use output from `_context_to_vec()` (Critic context space).
+- **Fix**: Use `CONTEXT_KEYS` to extract values from `SCENARIO_CONTEXTS` as the vector.
 
-### 陷阱 2：Chinese tag 泄漏
+### Pitfall 2: Chinese Tag Leakage
 
-- **表现**：英文角色回复中偶尔出现中文
-- **原因**：`【角色】`、`【内心独白】`、`【最终回复】` 等标签在英文 template 中没替换
-- **修复点**：
-  - `chat_agent.py` identity builder: `【角色】` → `[Character]`
-  - `actor_feel_en.md`: `【内心独白】` → `[Inner Monologue]`
-  - `actor_express_en.md`: `【最终回复】` → `[Final Reply]`、`【角色】` → `[Character]`
+- **Symptom**: An English persona occasionally uses Chinese in replies.
+- **Cause**: Tags such as `【角色】`, `【内心独白】`, and `【最终回复】` are not replaced in the English template.
+- **Fix locations**:
+  - `chat_agent.py` identity builder: replace `【角色】` with `[Character]`
+  - `actor_feel_en.md`: replace `【内心独白】` with `[Inner Monologue]`
+  - `actor_express_en.md`: replace `【最终回复】` with `[Final Reply]` and `【角色】` with `[Character]`
 
-### 陷阱 3：Signal anchors 中文
+### Pitfall 3: Chinese Signal Anchors
 
-- **表现**：signal 描述（`0委婉→1直白`）在英文 prompt 中出现中文
-- **原因**：`prompt_registry.py` 的 `load_signal_config` 只解析默认 key，丢弃了 `_en` 后缀的 key
-- **修复**：让 `load_signal_config` 透传所有 `_en` key
+- **Symptom**: Signal descriptions such as `0委婉→1直白` appear in English prompts.
+- **Cause**: `load_signal_config` in `prompt_registry.py` parses only the default keys and discards keys with the `_en` suffix.
+- **Fix**: Make `load_signal_config` pass through all `_en` keys.
 
-### 陷阱 4：classify_input 英文关键词不足
+### Pitfall 4: Insufficient English Keywords in `classify_input`
 
-- **表现**：大量种子被分到 "greeting" 或 "casual"，vector 高度重复
-- **原因**：英文关键词太少或太长（不匹配含中间词的句子）
-- **修复**：用短片段关键词，按优先级排列 scenario
+- **Symptom**: Many seeds are classified as `"greeting"` or `"casual"`, causing highly repetitive vectors.
+- **Cause**: English keywords are too scarce or too long, so they do not match sentences containing intervening words.
+- **Fix**: Use short-phrase keywords and arrange scenarios by priority.
 
-### 陷阱 5：Express 风格发散
+### Pitfall 5: Express Style Drift
 
-- **表现**：Monologue 是 INFP 害羞风格，但 Reply 变成外向 banter
-- **原因**：Express prompt 只有 identity + monologue，没有风格约束
-- **修复**：在 `actor_express_en.md` 中加：
+- **Symptom**: The monologue is appropriately shy and INFP-like, but the reply becomes an outgoing banter style.
+- **Cause**: The Express prompt contains only identity and monologue information, with no stylistic constraint.
+- **Fix**: Add the following to `actor_express_en.md`:
+
   ```
   The reply should directly mirror the tone and energy of the inner state.
   Do NOT add social pleasantries, topic changes, or enthusiasm
@@ -307,54 +310,54 @@ with open("/tmp/_dbg_output.txt", "w") as f:
   Keep the reply brief.
   ```
 
-### 陷阱 6：测试时 session 串扰
+### Pitfall 6: Session Contamination During Testing
 
-- **表现**：不同 persona 用同一个 `user_name` 测试，结果互相影响
-- **原因**：对话历史按 `(persona_id, user_id)` 存储，但 session context 可能共享
-- **修复**：每次测试用唯一的 `user_name`
+- **Symptom**: Testing different personas with the same `user_name` causes their results to influence each other.
+- **Cause**: Conversation history is stored by `(persona_id, user_id)`, and the session context may be shared.
+- **Fix**: Use a unique `user_name` for each test.
 
-### 陷阱 7：服务器缓存
+### Pitfall 7: Server Caching
 
-- **表现**：修改了 `.md` template 或 `.json` 种子但行为没变
-- **原因**：`uvicorn --reload` 只监控 `.py` 文件；prompt template 和种子有内存缓存
-- **修复**：重启服务器，或 `touch` 任一 `.py` 文件触发 reload
+- **Symptom**: Behavior does not change after modifying `.md` templates or `.json` seeds.
+- **Cause**: `uvicorn --reload` monitors only `.py` files; prompt templates and seeds may remain in memory caches.
+- **Fix**: Restart the server or `touch` any `.py` file to trigger a reload.
 
 ---
 
-## 七、完整操作 Checklist
+## VII. Complete Operational Checklist
 
-创建一个新的英文角色的完整步骤：
+Complete steps for creating a new English persona:
 
 ```
-□ 1. 创建 persona/personas/<id>/PERSONA.md
-     - 设置 lang: en
-     - 定义 MBTI、tags、bio、engine_params
+□ 1. Create persona/personas/<id>/PERSONA.md
+     - Set lang: en
+     - Define MBTI, tags, bio, and engine_params
 
-□ 2. 编写 genesis seeds JSON 文件（临时）
-     - 35+ 条种子，覆盖 7 种场景
-     - monologue 碎片化，reply 极简
-     - 严禁 *动作* / （描述）标记
-     - vector 全部写 [0,0,0,0,0,0,0,0]
-     - mass 全部写 1.0
+□ 2. Write the temporary genesis-seed JSON file
+     - Include at least 35 seeds covering 7 scenarios
+     - Keep monologues fragmented and replies extremely brief
+     - Strictly prohibit *action* or (description) markers
+     - Set every vector to [0,0,0,0,0,0,0,0]
+     - Set every mass to 1.0
 
-□ 3. 检查 classify_input 关键词覆盖
-     - 确保每条种子的 user_input 能被正确分类
-     - 必要时在 KEYWORD_MAP 中添加英文关键词
+□ 3. Check keyword coverage in classify_input
+     - Ensure every seed user_input is classified correctly
+     - Add English keywords to KEYWORD_MAP if necessary
 
-□ 4. 运行 calibrate_genesis.py（向量化 + 存入 DB）
+□ 4. Run calibrate_genesis.py to vectorize and store the data
      - PYTHONPATH=. python3 scripts/calibrate_genesis.py <id>
-     - 检查输出：每条种子的 scenario 分类是否正确
-     - 检查向量范围：不同 scenario 的 vector 应该明显不同
-     - 校准后数据自动存入 openher.db genesis_seed 表
+     - Check the output: verify the scenario assigned to each seed
+     - Check vector ranges: vectors for different scenarios should be clearly distinct
+     - After calibration, the data is automatically stored in the openher.db genesis_seed table
 
-□ 5. 重启服务器
+□ 5. Restart the server
 
-□ 6. 验证测试
-     - 5 个场景，独立 user_name
-     - 检查回复语言、MBTI 风格、种子命中
-     - 扫描 prompt 是否有中文残留
+□ 6. Run validation tests
+     - Test 5 scenarios using independent user_name values
+     - Check reply language, MBTI style, and seed hits
+     - Scan prompts for Chinese-character leakage
 ```
 
 ---
 
-*最后更新：2026-03-09，基于 Ember (EN INFP) 完整实现经验*
+*Last updated: March 9, 2026, based on complete implementation experience with Ember (English / INFP).*
