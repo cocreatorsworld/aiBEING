@@ -1,230 +1,232 @@
-# Qwen3-TTS-Instruct 音色控制指南
+# Qwen3-TTS-Instruct Voice Control Guide
 
-模型：`qwen3-tts-instruct-flash-realtime`（DashScope WebSocket Realtime API）
-
----
-
-## 三层控制体系
-
-### 第 1 层：`voice` — 基础音色（选"谁"的嗓子）
-
-固定系统预设，决定基本声线。**每个 persona 绑定一个 voice，不变。**
-
-#### 女声
-
-| voice | 名字 | 特点 |
-|:--|:--|:--|
-| `Cherry` | 芊悦 | 阳光积极、亲切自然 |
-| `Serena` | 苏瑶 | 温柔 |
-| `Chelsie` | 千雪 | 二次元虚拟女友 |
-| `Momo` | 茉兔 | 撒娇搞怪 |
-| `Vivian` | 十三 | 拽拽的、可爱的小暴躁 |
-| `Maia` | 四月 | 知性与温柔 |
-| `Mia` | 乖小妹 | 温顺乖巧 |
-| `Nini` | 邻家妹妹 | 又软又黏 |
-| `Bella` | 萌宝 | 小萝莉 |
-| `Bunny` | 萌小姬 | 萌属性爆棚 |
-| `Stella` | 少女阿月 | 甜到发腻的迷糊少女 |
-| `Seren` | 小婉 | 温和舒缓（助眠向） |
-
-#### 男声
-
-| voice | 名字 | 特点 |
-|:--|:--|:--|
-| `Ethan` | 晨煦 | 阳光、温暖、活力 |
-| `Moon` | 月白 | 率性帅气 |
-| `Kai` | 凯 | 耳朵的SPA（磁性） |
-| `Nofish` | 不吃鱼 | 设计师（不翘舌） |
-
-> 完整音色列表见 [DashScope文档](https://help.aliyun.com/zh/model-studio/qwen-tts-realtime)
+Model: `qwen3-tts-instruct-flash-realtime` (DashScope WebSocket Realtime API)
 
 ---
 
-### 第 2 层：`instructions` — 指令控制（控制"怎么说"）
+## Three-Layer Control System
 
-**核心能力。** 同一个 voice，instructions 不同，效果完全不同。
+### Layer 1: `voice` — Base Voice (Choose “whose” voice)
 
-#### 可用维度
+A fixed system preset that determines the basic vocal characteristics. **Each persona is bound to one voice and keeps it unchanged.**
 
-| 维度 | 示例值 |
+#### Female Voices
+
+| voice | Name | Characteristics |
+|:--|:--|:--|
+| `Cherry` | 芊悦 | Cheerful, positive, approachable, and natural |
+| `Serena` | 苏瑶 | Gentle |
+| `Chelsie` | 千雪 | Anime-style virtual girlfriend |
+| `Momo` | 茉兔 | Cute and playful |
+| `Vivian` | 十三 | Sassy and adorably feisty |
+| `Maia` | 四月 | Intellectual and gentle |
+| `Mia` | 乖小妹 | Well-behaved and obedient |
+| `Nini` | 邻家妹妹 | Soft and clingy |
+| `Bella` | 萌宝 | Cute little girl |
+| `Bunny` | 萌小姬 | Extremely cute |
+| `Stella` | 少女阿月 | Sweet and distractibly youthful |
+| `Seren` | 小婉 | Mild and soothing; suitable for sleep assistance |
+
+#### Male Voices
+
+| voice | Name | Characteristics |
+|:--|:--|:--|
+| `Ethan` | 晨煦 | Sunny, warm, and energetic |
+| `Moon` | 月白 | Free-spirited and handsome |
+| `Kai` | 凯 | A spa for the ears; magnetic voice |
+| `Nofish` | 不吃鱼 | Designer; does not retroflex |
+
+> See the [DashScope documentation](https://help.aliyun.com/zh/model-studio/qwen-tts-realtime) for the complete voice list.
+
+---
+
+### Layer 2: `instructions` — Instruction Control (Control “how it speaks”)
+
+**Core capability.** The same voice can produce completely different results with different instructions.
+
+#### Available Dimensions
+
+| Dimension | Example Values |
 |:--|:--|
-| **音调** | 偏高、偏低、低沉、清脆 |
-| **语速** | 偏快、偏慢、中速 |
-| **情感** | 开朗、沉稳、温柔、严肃、活泼、害羞、冷静、治愈 |
-| **特点** | 有磁性、清脆、沙哑、圆润、甜美、浑厚、有力 |
-| **场景** | 像闺蜜聊天、像在撒娇、像播报新闻 |
+| **Pitch** | Slightly high, slightly low, deep, crisp |
+| **Speaking rate** | Slightly fast, slightly slow, medium |
+| **Emotion** | Cheerful, composed, gentle, serious, lively, shy, calm, soothing |
+| **Characteristics** | Magnetic, crisp, husky, mellow, sweet, resonant, powerful |
+| **Context** | Like chatting with a close friend, like acting coy, like delivering a news broadcast |
 
-#### 编写原则
+#### Writing Principles
 
-1. **具体**：`"低沉"` > `"好听"`
-2. **多维**：`"语速偏快，音调偏高，带有活泼感"` > `"高音"`
-3. **客观**：描述声音特征，不要 `"我最喜欢的声音"`
-4. **简洁**：每个词都有意义，不要堆砌同义词
+1. **Be specific:** `"deep voice"` is better than `"pleasant voice"`
+2. **Use multiple dimensions:** `"speaking slightly fast, with a high pitch and a lively tone"` is better than `"high pitch"`
+3. **Be objective:** Describe the vocal characteristics; do not say `"my favorite voice"`
+4. **Be concise:** Every word should add meaning; avoid strings of synonyms
 
-#### 示例
+#### Examples
 
-```
-# 同一个 Cherry 音色，不同情绪
-开心 → "语速偏快，语气活泼开朗，像在分享一个好消息"
-害羞 → "语速偏慢，声音轻柔，带有害羞和犹豫的感觉"
-生气 → "音量偏大，语速快，带有明显的不满和嘟嘴感"
-撒娇 → "音调偏高，语速偏慢，尾音上扬，带有撒娇和期待感"
-难过 → "语速偏慢，声音低沉，带有失落感，像要哭的样子"
-正经 → "吐字清晰，语速中等，语气认真沉稳"
+```text
+# Different emotions using the same Cherry voice
+Happy → "Speak quickly with an lively, cheerful tone, as if sharing good news"
+Shy → "Speak slowly and softly, with shyness and hesitation"
+Angry → "Speak loudly and quickly, with obvious dissatisfaction and a pout"
+Acting coy → "Use a high pitch and a slightly slow pace, raise the final syllables, and sound coy and expectant"
+Sad → "Speak slowly and with a low, heavy voice, conveying a sense of loss, as if about to cry"
+Serious → "Enunciate clearly at a medium pace with a composed and earnest tone"
 ```
 
 ---
 
-### 第 3 层：`optimize_instructions=True`
+### Layer 3: `optimize_instructions=True`
 
-开启后模型自动重写 instructions，使其更适合语音合成。相当于 prompt 优化层。
-建议始终开启。
+When enabled, the model automatically rewrites instructions to make them more suitable for speech synthesis. It acts as a prompt-optimization layer.
+
+It is recommended to keep this enabled.
 
 ---
 
-## OpenHer 集成策略
+## OpenHer Integration Strategy
 
-```
-基础音色 (voice, 每个 persona 固定)
+```text
+Base voice (voice, fixed for each persona)
     +
-动态指令 (instructions, 每轮对话根据情绪实时生成)
+Dynamic instructions (instructions, generated in real time from the emotion for each conversation turn)
     =
-有情感的人格化语音
+Emotional, personalized speech
 ```
 
-1. 每个 persona 在配置里绑定一个 `voice`
-2. 每次引擎推理输出情绪状态后，动态生成 `instructions`
-3. 调用 TTS 时传入 `voice` + `instructions`
+1. Bind a `voice` to each persona in the configuration.
+2. After the engine outputs an emotional state, dynamically generate `instructions`.
+3. When calling TTS, pass `voice` and `instructions`.
 
-**不需要硬编码情绪映射表** — 自然语言 → 自然语言，让 LLM 直接描述当前应该怎么说。
+**No hard-coded emotion mapping table is needed** — natural language to natural language, allowing the LLM to directly describe how the response should be spoken.
 
 ---
 
-## 官方案例分析
+## Analysis of the Official Examples
 
-以下案例来自 Qwen3-TTS 官方 Demo，展示三种指令控制模式。
+The following cases come from the official Qwen3-TTS demo and demonstrate three instruction-control modes.
 
-### 模式 A：单属性控制（Simple）
+### Mode A: Single-Attribute Control (Simple)
 
-用一句话控制单一维度。适合快速切换情绪。
+Use one sentence to control a single dimension. This is suitable for quickly switching emotions.
 
-以 **Ryan（甜茶）** 音色为例，同一句 `"She said she would be here by noon."`：
+For example, with the **Ryan** voice and the same sentence, `"She said she would be here by noon."`:
 
-| 指令 | 效果 |
+| Instruction | Effect |
 |:--|:--|
-| `spoke with a very sad and tearful voice.` | 悲伤哭腔 |
-| `Very happy.` | 快乐 |
-| `用特别愤怒的语气说` | 愤怒 |
-| `请特别小声的悄悄说` | 悄悄话/耳语 |
-| `Speaking at an extremely slow pace` | 极慢语速 |
-| `音调低沉` | 低沉 |
+| `spoke with a very sad and tearful voice.` | Sad, tearful tone |
+| `Very happy.` | Happy |
+| `用特别愤怒的语气说` | Extremely angry tone |
+| `请特别小声的悄悄说` | Whisper |
+| `Speaking at an extremely slow pace` | Extremely slow pace |
+| `音调低沉` | Deep pitch |
 
-> **要点**：指令支持中英文混用，单一维度也能产生显著效果。
+> **Key point:** Instructions can mix Chinese and English, and even a single dimension can create a significant effect.
 
-### 模式 B：多属性控制（Rich）⭐ OpenHer 推荐
+### Mode B: Multi-Attribute Control (Rich) ⭐ Recommended for OpenHer
 
-用结构化多维描述，实现丰富的人格化语音。**这是 OpenHer 应该用的模式。**
+Use structured, multi-dimensional descriptions to create rich, personalized speech. **This is the mode OpenHer should use.**
 
-以 **Vivian（十三）** 音色为例：
+For example, with the **Vivian** voice:
 
-#### 示例 1：完整人格描述（作为 persona 基底指令）
+#### Example 1: Complete Personality Description (as a Persona Base Instruction)
 
-```
-性别: 女性声音.
-音高: 女性中高音区，语调富于变化.
-语速: 语速明快，偶有加速.
-音量: 正常交谈音量，笑声响亮.
-清晰度: 吐字清晰，发音标准.
-流畅度: 表达流畅自如.
-口音: 普通话.
-音色质感: 音色明亮，略带爽朗.
-情绪: 愉悦友好，伴随爽朗笑意.
-语调: 语调上扬活泼，疑问时尤为明显.
-性格: 外向开朗，热情健谈.
-```
-
-> **分析**：覆盖 11 个维度，完整定义了一个人的说话方式。可以作为 persona 的**固定基底指令**。
-
-#### 示例 2：场景化情绪指令（动态叠加）
-
-```
-以极度悲伤、带着明显哭腔的语气，用较小的音量缓缓诉说，
-语速缓慢，仿佛每一个字都承载着沉重的痛楚，
-声音颤抖而压抑，吐字虽轻却清晰可辨，
-透出深藏心底的哀伤与无助。
+```text
+Gender: Female voice.
+Pitch: Medium-high female range with highly varied intonation.
+Speaking rate: Brisk, occasionally accelerating.
+Volume: Normal conversational volume, with loud laughter.
+Clarity: Clear enunciation and standard pronunciation.
+Fluency: Fluent and natural expression.
+Accent: Mandarin.
+Vocal texture: Bright and slightly cheerful.
+Emotion: Pleasant and friendly, with a bright smile in the voice.
+Intonation: Upbeat and lively, especially at the end of questions.
+Personality: Outgoing, cheerful, enthusiastic, and talkative.
 ```
 
-> **分析**：纯情绪指令，画面感极强。适合引擎输出的情绪状态转化。
+> **Analysis:** This covers 11 dimensions and fully defines how a person speaks. It can serve as the persona’s **fixed base instruction**.
 
-#### 示例 3：保持声线 + 调整风格
+#### Example 2: Scene-Based Emotional Instruction (Dynamic Addition)
 
+```text
+In an extremely sad tone filled with obvious sobs, speak in a low voice and tell the story slowly.
+Speak slowly, as though every word carries crushing pain.
+Let the voice tremble and remain subdued, with soft but clear enunciation,
+conveying sorrow and helplessness hidden deep in the heart.
 ```
-保持青年女性的声线特征，展现出一种清亮且略具紧迫感的音色，
-语速从平稳开始在叙述过程中逐渐加快，
-音量在情绪波动时增加，
-语调在句末调高以强调劝告的语气。
+
+> **Analysis:** This is a pure emotional instruction with strong imagery. It is suitable for converting the engine’s emotional state.
+
+#### Example 3: Preserve the Vocal Identity While Adjusting the Style
+
+```text
+Maintain the vocal characteristics of a young woman, exhibiting a clear voice with a slight sense of urgency.
+Begin at a steady pace and gradually speak faster during the narration.
+Increase the volume as emotions fluctuate.
+Raise the pitch at the end of sentences to emphasize a tone of advice or warning.
 ```
 
-> **分析**：先锚定声线不变，再描述风格变化。适合角色需要**临时变换语气**但不变人的场景。
+> **Analysis:** First anchor the voice so it remains unchanged, then describe the style changes. This is suitable for situations where a character needs to temporarily change tone without changing identity.
 
-### 模式 C：跨语种（同 voice + 同 instructions → 不同语言）
+### Mode C: Cross-Language Use (Same Voice + Same Instructions → Different Languages)
 
-同一个 Vivian 音色 + 同一组 instructions，可以直接输出韩语、日语、四川话等。
-模型自动识别文本语种并切换发音，音色和情感保持一致。
+The same Vivian voice and the same instructions can directly produce Korean, Japanese, Sichuanese, and other languages.
 
-> **对 OpenHer 的意义**：英文 persona 不需要换音色，直接用同一个 voice 说英文即可。
+The model automatically identifies the language of the text and adjusts pronunciation while maintaining consistent vocal identity and emotion.
+
+> **OpenHer implication:** An English persona does not need to switch voices; it can directly use the same voice to speak English.
 
 ---
 
-## OpenHer 指令生成策略
+## OpenHer Instruction Generation Strategy
 
-基于案例分析，推荐**两层指令叠加**：
+Based on the preceding example analysis, **two-layer instruction stacking** is recommended:
 
+```text
+Final instructions = persona base instructions + current emotion instructions
 ```
-最终 instructions = 人格基底指令 + 当前情绪指令
-```
 
-### 人格基底指令（固定，写在 persona 配置里）
+### Persona Base Instructions (Fixed; Stored in the Persona Configuration)
 
-每个 persona 一份，描述"这个人平时怎么说话"：
+One set for each persona, describing “how this person usually speaks”:
 
 ```yaml
 # persona/personas/luna/persona.yaml
 tts:
   voice: "Cherry"
   base_instructions: |
-    音高: 女性中高音区，语调起伏明显.
-    语速: 语速明快，兴奋时加速.
-    音色质感: 明亮甜美，带有少女感.
-    性格: 外向活泼，元气满满.
+    Pitch: Medium-high female range with noticeable intonation variation.
+    Speaking rate: Brisk and faster when excited.
+    Vocal texture: Bright and sweet, with a youthful quality.
+    Personality: Outgoing, lively, and energetic.
 ```
 
-### 当前情绪指令（动态，由引擎情绪推理生成）
+### Current Emotion Instruction (Dynamic; Generated from the Engine’s Emotion Analysis)
 
-每轮对话根据情绪状态生成：
+Generated for every conversation turn based on the emotional state:
 
+```text
+# Engine output: emotion=excited
+→ "Speak with strong excitement, at a slightly fast pace, with a rising voice, as if discovering something fun"
 ```
-# 引擎输出 emotion=excited
-→ "语气特别兴奋，语速偏快，声音上扬，像发现了什么好玩的东西"
-```
 
-### 合并后传给 TTS
+### Combine Before Passing to TTS
 
-```
-instructions = base_instructions + "\n当前情绪：" + emotion_instructions
+```text
+instructions = base_instructions + "\nCurrent emotion: " + emotion_instructions
 ```
 
 ---
 
-## API 要点
+## API Notes
 
-| 参数 | 值 |
+| Parameter | Value |
 |:--|:--|
-| 模型 | `qwen3-tts-instruct-flash-realtime` |
-| 协议 | WebSocket (`wss://dashscope.aliyuncs.com/api-ws/v1/realtime`) |
+| Model | `qwen3-tts-instruct-flash-realtime` |
+| Protocol | WebSocket (`wss://dashscope.aliyuncs.com/api-ws/v1/realtime`) |
 | SDK | `dashscope.audio.qwen_tts_realtime.QwenTtsRealtime` |
-| 音频格式 | PCM 24kHz mono 16-bit → 保存为 WAV |
-| instructions 长度限制 | ≤ 1600 Token |
-| instructions 语言 | 仅中文和英文 |
-| 限流 | 180 RPM |
-| 价格 | 1元/万字符 |
+| Audio format | PCM, 24 kHz, mono, 16-bit → save as WAV |
+| Instruction length limit | ≤ 1600 tokens |
+| Instruction language | Chinese and English only |
+| Rate limit | 180 RPM |
+| Price | ¥1 per 10,000 characters |
