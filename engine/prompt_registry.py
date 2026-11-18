@@ -1,8 +1,8 @@
 """
-PromptRegistry — Load prompt templates and signal configs from config/prompts/.
+PromptRegistry — Loads prompt templates and signal configurations from config/prompts/.
 
 Uses string.Template ($variable) to avoid conflicts with JSON braces.
-Falls back to hardcoded defaults if config files don't exist.
+Falls back to hardcoded defaults if configuration files do not exist.
 """
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ _signal_cache: Optional[dict] = None
 
 
 def load_prompt(name: str, fallback: str = "") -> str:
-    """Load prompt template from config/prompts/{name}.md, cache in memory."""
+    """Load a prompt template from config/prompts/{name}.md and cache it in memory."""
     if name in _cache:
         return _cache[name]
     path = _PROMPTS_DIR / f"{name}.md"
@@ -32,29 +32,29 @@ def load_prompt(name: str, fallback: str = "") -> str:
 
 
 def render_prompt(name: str, fallback: str = "", **kwargs) -> str:
-    """Load prompt template + substitute $variables.
+    """Load a prompt template and substitute $variables.
 
-    Uses safe_substitute: unknown $vars are left as-is (no KeyError).
+    Uses safe_substitute: unknown $variables remain unchanged instead of raising KeyError.
     """
     tmpl = load_prompt(name, fallback)
     return Template(tmpl).safe_substitute(**kwargs)
 
 
 def load_signal_config(fallback_signals: dict = None, fallback_drives: dict = None) -> dict:
-    """Load signal_buckets.yaml → structured config with labels + buckets + drives.
+    """Load signal_buckets.yaml → structured configuration containing labels, buckets, and drives.
 
     Returns:
         {
             'signals': {
                 'directness': {
-                    'label': '直接感',
-                    'emoji_label': '🎯 直接度',
-                    'buckets': [(0.0, 0.33, '说话委婉含蓄...'), ...],
+                    'label': 'Directness',
+                    'emoji_label': '🎯 Directness',
+                    'buckets': [(0.0, 0.33, 'Direct and blunt speech...'), ...],
                 },
                 ...
             },
             'drives': {
-                'connection': {'label': '联结', 'emoji_label': '🔗 联结'},
+                'connection': {'label': 'Connection', 'emoji_label': '🔗 Connection'},
                 ...
             },
         }
@@ -106,7 +106,7 @@ def load_signal_config(fallback_signals: dict = None, fallback_drives: dict = No
 
 
 def reload():
-    """Clear all caches — call after editing prompt files at runtime."""
+    """Clear all caches — call this after editing prompt files at runtime."""
     global _signal_cache
     _cache.clear()
     _signal_cache = None
