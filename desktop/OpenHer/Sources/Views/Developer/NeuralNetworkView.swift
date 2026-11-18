@@ -15,8 +15,14 @@ private let SIGNAL_NAMES = ["directness", "vulnerability", "playfulness", "initi
                             "depth", "warmth", "defiance", "curiosity"]
 
 private let SIGNAL_SEMANTICS: [(String, String)] = [
-    ("委婉","直说"), ("防御","袒露"), ("认真","玩闹"), ("被动","主动"),
-    ("闲聊","深度"), ("冷淡","热情"), ("顺从","反抗"), ("无所谓","追问"),
+    ("Indirect", "Direct"),
+    ("Defensive", "Open"),
+    ("Serious", "Playful"),
+    ("Passive", "Proactive"),
+    ("Casual", "Deep"),
+    ("Cold", "Warm"),
+    ("Compliant", "Defiant"),
+    ("Indifferent", "Inquisitive"),
 ]
 
 private let SIGNAL_COLORS: [Color] = [
