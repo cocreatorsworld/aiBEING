@@ -1,10 +1,10 @@
 """
-Memory 共享类型.
+Memory shared types.
 
-定义 Memory, SessionContext 等类型。
-这些类型同时被 soulmem 和 evermemos provider 使用。
-原模块 (memory_store.py, evermemos_client.py) 保持自己的定义不变，
-后续迁移时从此处 import。
+Defines types such as Memory, SessionContext, etc.
+These types are used by both the soulmem and evermemos providers.
+The original modules (memory_store.py, evermemos_client.py) keep their own
+definitions unchanged; import from here when migrating later.
 """
 
 from __future__ import annotations
@@ -29,7 +29,7 @@ class Memory:
 @dataclass
 class SessionContext:
     """
-    EverMemOS session context (陈述记忆).
+    EverMemOS session context (declarative memory).
 
     Loaded once at session start, contains relationship priors,
     user profile, episode summaries, and foresight.
