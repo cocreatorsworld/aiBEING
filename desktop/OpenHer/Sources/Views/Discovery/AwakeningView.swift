@@ -4,9 +4,9 @@ import AVFoundation
 /// Awakening transition — video → sci-fi initialization → conversation.
 ///
 /// Transition strategy:
-/// - Video stays visible as background while init sequence fades in on top
-/// - Init text uses typewriter character-by-character reveal
-/// - Init text fades out before transitioning to conversation
+/// - The video remains visible as a background while the initialization sequence fades in on top.
+/// - Initialization text is revealed character by character using a typewriter effect.
+/// - Initialization text fades out before transitioning to the conversation.
 struct AwakeningView: View {
     let persona: Persona
     @EnvironmentObject var appState: AppState
@@ -16,7 +16,7 @@ struct AwakeningView: View {
     @State private var hasVideo: Bool = false
     @State private var videoReady: Bool = false
 
-    // Init sequence
+    // Initialization sequence
     @State private var showInitSequence: Bool = false
     @State private var dimAmount: Double = 0
     @State private var initPhase: Int = 0
@@ -30,17 +30,17 @@ struct AwakeningView: View {
     /// Persona-specific initialization steps
     private var initSteps: [String] {
         let mbti = persona.mbti ?? "UNKNOWN"
-        let desc = persona.description ?? L10n.str("标准模式", en: "Standard")
+        let desc = persona.description ?? L10n.str("Standard Mode", en: "Standard")
         let tagStr = PersonaCard.localizedTags(persona).prefix(3).map { "#\($0)" }.joined(separator: " ")
 
-    return [
-        L10n.str("Initializing neural pathways...", en: "Initializing neural pathways..."),
-        L10n.str("Loading memory data...", en: "Loading memory data..."),
-        L10n.str("Setting personality: ", en: "Setting personality: ") + mbti,
-        L10n.str("Calibrating emotion baseline: ", en: "Calibrating emotion baseline: ") + desc,
-        L10n.str("Injecting resonance tags: ", en: "Injecting resonance tags: ") + tagStr,
-        L10n.str("Booting consciousness core...", en: "Booting consciousness core..."),
-]
+        return [
+            L10n.str("Initializing neural pathways...", en: "Initializing neural pathways..."),
+            L10n.str("Loading memory data...", en: "Loading memory data..."),
+            L10n.str("Setting personality: ", en: "Setting personality: ") + mbti,
+            L10n.str("Calibrating emotion baseline: ", en: "Calibrating emotion baseline: ") + desc,
+            L10n.str("Injecting resonance tags: ", en: "Injecting resonance tags: ") + tagStr,
+            L10n.str("Booting consciousness core...", en: "Booting consciousness core..."),
+        ]
     }
 
     var body: some View {
@@ -49,7 +49,7 @@ struct AwakeningView: View {
             personaBaseImage
                 .ignoresSafeArea()
 
-            // === Layer 1: Video — crossfades in slowly over base image ===
+            // === Layer 1: Video — crossfades in slowly over the base image ===
             if hasVideo, let player = player {
                 AVPlayerRepresentable(player: player)
                     .ignoresSafeArea()
@@ -57,13 +57,13 @@ struct AwakeningView: View {
                     .animation(.easeInOut(duration: 0.8), value: videoReady)
             }
 
-            // === Layer 2: Gradual dim overlay — bridges video into init ===
+            // === Layer 2: Gradual dim overlay — bridges the video into initialization ===
             Paper.background
                 .opacity(dimAmount)
                 .ignoresSafeArea()
                 .animation(.easeInOut(duration: 1.2), value: dimAmount)
 
-            // === Layer 3: Init sequence text ===
+            // === Layer 3: Initialization sequence text ===
             if showInitSequence {
                 initSequenceView
                     .opacity(fadingOut ? 0 : 1)
@@ -97,7 +97,7 @@ struct AwakeningView: View {
         }
     }
 
-    // MARK: - Init Sequence View
+    // MARK: - Initialization Sequence View
 
     private var initSequenceView: some View {
         VStack(spacing: 0) {
@@ -122,7 +122,7 @@ struct AwakeningView: View {
             VStack(alignment: .leading, spacing: 12) {
                 ForEach(0..<typedTexts.count, id: \.self) { i in
                     HStack(spacing: 10) {
-                        // Checkmark for completed, spinner for current
+                        // Checkmark for a completed line; spinner for the current line
                         if i < typedTexts.count - 1 || initComplete {
                             Image(systemName: "checkmark")
                                 .font(.system(size: 9, weight: .bold))
@@ -144,9 +144,9 @@ struct AwakeningView: View {
 
             Spacer().frame(height: 36)
 
-            // "已上线" — final ceremonial line
+            // Final ceremonial line
             if initComplete {
-                Text(L10n.str("「\(persona.displayName) 已上线」", en: "「\(persona.displayName) is online」"))
+                Text(L10n.str("「\(persona.displayName) is online」", en: "「\(persona.displayName) is online」"))
                     .font(.system(size: 16, weight: .medium, design: .serif))
                     .foregroundStyle(Paper.coral)
                     .transition(.opacity)
@@ -171,7 +171,7 @@ struct AwakeningView: View {
 
     private func setupAwakening() {
         let baseURL = appState.serverURL
-        // Use cached front image immediately (from PersonaCard) to prevent white flash
+        // Use the cached front image immediately (from PersonaCard) to prevent a white flash
         if let cached = appState.cachedFrontImages[persona.personaId] {
             self.baseNSImage = cached
         } else if persona.hasFront, let url = URL(string: "\(baseURL)/api/persona/\(persona.personaId)/media/front") {
@@ -183,26 +183,27 @@ struct AwakeningView: View {
             }.resume()
         }
 
-        // Load awakening video from backend API
+        // Load the awakening video from the backend API
         if persona.hasAwakeningVideo {
             let videoURLString = "\(appState.serverURL)/api/persona/\(persona.personaId)/media/awakening"
             if let videoURL = URL(string: videoURLString) {
                 let asset = AVURLAsset(url: videoURL)
                 let playerItem = AVPlayerItem(asset: asset)
                 let avPlayer = AVPlayer(playerItem: playerItem)
-                avPlayer.actionAtItemEnd = .pause  // prevent looping
+                avPlayer.actionAtItemEnd = .pause  // Prevent looping
+
                 self.player = avPlayer
                 self.hasVideo = true
 
                 // Start playback immediately
                 avPlayer.play()
 
-                // After a brief buffer, crossfade video in over the static PNG
+                // Crossfade the video in over the static PNG after a brief buffer
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     videoReady = true
                 }
 
-                // Start init sequence 2s BEFORE video ends
+                // Start the initialization sequence 2 seconds before the video ends
                 Task {
                     let duration = try? await asset.load(.duration)
                     if let duration = duration {
@@ -227,151 +228,19 @@ struct AwakeningView: View {
                 }
             }
         } else {
-            // No video — go to init after a brief pause
+            // No video — begin initialization after a brief pause
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 startInitSequence()
             }
         }
     }
 
-    // MARK: - Init Sequence with Typewriter
+    // MARK: - Initialization Sequence with Typewriter
 
     private func startInitSequence() {
-        guard !showInitSequence else { return }  // prevent double trigger
+        guard !showInitSequence else { return }  // Prevent duplicate triggering
         showInitSequence = true
 
-        // Gradually dim the video/background over 1.2s
-        dimAmount = 0.88
-
-        // Fade out audio over 3s — extends into typing phase
-        fadeOutAudio(duration: 3.0)
-
-        // Animate name appearance
-        withAnimation(.easeOut(duration: 0.8)) {
-            nameOpacity = 1.0
-        }
-
-        // Start typewriter steps after name appears
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-            typewriteStep(index: 0)
-        }
-    }
-
-    /// Gradually reduce video volume over the specified duration
-    private func fadeOutAudio(duration: Double = 2.0) {
-        guard let player = player else { return }
-        let steps = 20
-        let interval = duration / Double(steps)
-
-        for i in 1...steps {
-            DispatchQueue.main.asyncAfter(deadline: .now() + interval * Double(i)) {
-                let volume = max(0, 1.0 - Float(i) / Float(steps))
-                player.volume = volume
-                // Hard stop when fade finishes
-                if i == steps {
-                    player.pause()
-                }
-            }
-        }
-    }
-
-    private func typewriteStep(index: Int) {
-        guard index < initSteps.count else {
-            // All steps done — show "已上线"
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                withAnimation(.easeInOut(duration: 0.4)) {
-                    initComplete = true
-                }
-                // Fade out everything, then transition
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-                    fadeOutAndTransition()
-                }
-            }
-            return
-        }
-
-        initPhase = index + 1
-        let fullText = initSteps[index]
-
-        // Add empty string placeholder
-        withAnimation(.easeIn(duration: 0.15)) {
-            typedTexts.append("")
-        }
-
-        // Typewriter: reveal characters one by one
-        let chars = Array(fullText)
-        for (charIndex, _) in chars.enumerated() {
-            let delay = Double(charIndex) * 0.035  // 35ms per character
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                if typedTexts.count > index {
-                    typedTexts[index] = String(chars.prefix(charIndex + 1))
-                }
-            }
-        }
-
-        // After this line finishes typing, pause, then start next
-        let typeDuration = Double(chars.count) * 0.035
-        let pauseAfter = 0.4  // brief pause between lines
-        DispatchQueue.main.asyncAfter(deadline: .now() + typeDuration + pauseAfter) {
-            typewriteStep(index: index + 1)
-        }
-    }
-
-    private func fadeOutAndTransition() {
-        // Stop any remaining audio before transitioning
-        cleanupPlayer()
-        // RootView handles the slide-up animation — just switch phase
-        appState.completeAwakening()
-    }
-
-    private func cleanupPlayer() {
-        player?.pause()
-        if let item = player?.currentItem {
-            NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: item)
-        }
-        player = nil
-    }
-}
-
-// MARK: - AVPlayerRepresentable
-
-struct AVPlayerRepresentable: NSViewRepresentable {
-    let player: AVPlayer
-
-    func makeNSView(context: Context) -> NSView {
-        let view = AVPlayerLayerView()
-        view.playerLayer.player = player
-        view.playerLayer.videoGravity = .resizeAspectFill
-        return view
-    }
-
-    func updateNSView(_ nsView: NSView, context: Context) {
-        guard let layerView = nsView as? AVPlayerLayerView else { return }
-        layerView.playerLayer.player = player
-    }
-}
-
-private class AVPlayerLayerView: NSView {
-    override init(frame: NSRect) {
-        super.init(frame: frame)
-        wantsLayer = true
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        wantsLayer = true
-    }
-
-    override func makeBackingLayer() -> CALayer {
-        return AVPlayerLayer()
-    }
-
-    var playerLayer: AVPlayerLayer {
-        return layer as! AVPlayerLayer
-    }
-
-    override func layout() {
-        super.layout()
-        playerLayer.frame = bounds
-    }
-}
+        // Gradually dim the video/background over 1.2 seconds
+        dimAmount = 0.88_
+
