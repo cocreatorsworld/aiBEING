@@ -1,51 +1,52 @@
+```yaml
 title: "Core Showcase"
-description: "展示 OpenHer 核心能力的预设消息和场景"
+description: "Preset messages and scenarios showcasing OpenHer's core capabilities"
 
-# ── 快捷消息 ──
-# 点击一键发送，LLM 真实回复
+# ── Quick Messages ──
+# Send with one click; the LLM responds in real time
 presets:
-  # 日常闲聊（展示性格）
-  - label: "💬 闲聊"
-    message: "在干嘛呢？"
+  # Casual chat (showcases personality)
+  - label: "💬 Casual Chat"
+    message: "What are you doing?"
 
-  - label: "😊 分享"
-    message: "今天升职加薪了！好开心"
+  - label: "😊 Share"
+    message: "I got a promotion and a raise today! I'm so happy"
 
-  - label: "😔 倾诉"
-    message: "最近压力好大，感觉快撑不住了"
+  - label: "😔 Vent"
+    message: "I've been under a lot of pressure lately. I feel like I can't take it anymore"
 
-  # 敷衍系列（触发情绪积累 → 相变）
-  - label: "😑 敷衍1"
-    message: "嗯"
+  # Dismissive responses (build emotional frustration → phase transition)
+  - label: "😑 Brief Reply 1"
+    message: "Mm-hmm"
 
-  - label: "😑 敷衍2"
-    message: "哦"
+  - label: "😑 Brief Reply 2"
+    message: "Oh"
 
-  - label: "😑 敷衍3"
-    message: "嗯嗯"
+  - label: "😑 Brief Reply 3"
+    message: "Yeah, yeah"
 
-  # 记忆 & 深度
-  - label: "☕ 记忆线索"
-    message: "帮我买杯咖啡呗"
+  # Memory & depth
+  - label: "☕ Memory Cue"
+    message: "Could you buy me a cup of coffee?"
 
-  - label: "🌙 深夜"
-    message: "睡不着…"
+  - label: "🌙 Late Night"
+    message: "I can't sleep..."
 
-  # 冲突
-  - label: "💢 挑衅"
-    message: "你只是一个AI而已"
+  # Conflict
+  - label: "💢 Provoke"
+    message: "You're just an AI"
 
-# ── 场景快照 ──
-# 一键设定引擎状态
+# ── Scenario Snapshots ──
+# Set the engine state with one click
 scenarios:
   lonely:
-    label: "😢 孤独状态"
-    description: "模拟8小时未互动"
+    label: "😢 Lonely"
+    description: "Simulates eight hours without interaction"
     time_jump_hours: 8
 
   about_to_snap:
-    label: "💥 即将爆发"
-    description: "挫败值接近相变阈值，可触发主动消息"
+    label: "💥 About to Snap"
+    description: "Frustration is close to the phase-transition threshold and may trigger a proactive message"
     inject:
       frustration:
         connection: 3.5
@@ -53,16 +54,16 @@ scenarios:
         expression: 2.0
 
   deeply_bonded:
-    label: "💕 深度关系"
-    description: "模拟深度相处"
+    label: "💕 Deeply Bonded"
+    description: "Simulates a deeply established relationship"
     inject:
       drive_baseline:
         connection: 0.85
         safety: 0.35
 
   calm_reset:
-    label: "🧘 冷静重置"
-    description: "清空挫败，回到基线"
+    label: "🧘 Calm Reset"
+    description: "Clears frustration and restores baseline values"
     inject:
       frustration:
         connection: 0.0
@@ -70,3 +71,4 @@ scenarios:
         expression: 0.0
         safety: 0.0
         play: 0.0
+```
