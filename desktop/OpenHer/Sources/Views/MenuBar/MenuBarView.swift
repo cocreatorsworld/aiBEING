@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Menu bar dropdown — paper aesthetic, shows persona + quick actions.
+/// Menu bar dropdown — paper aesthetic, showing the persona and quick actions.
 struct MenuBarView: View {
     @EnvironmentObject var appState: AppState
 
@@ -33,7 +33,7 @@ struct MenuBarView: View {
                         Text(persona.displayName)
                             .font(Paper.nameFont)
                             .foregroundStyle(Paper.herText)
-                        Text(L10n.str("FREQ. 调频中 ∿", en: "FREQ. tuning ∿"))
+                        Text(L10n.str("FREQ. 调频中 ∿", en: "FREQ. Tuning ∿"))
                             .font(Paper.tinyFont)
                             .foregroundStyle(Paper.coral)
                     }
