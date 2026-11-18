@@ -1,4 +1,4 @@
-# GPT-5.4-mini-2026-03-17 Personality Engine Benchmark Report
+gl# GPT-5.4-mini-2026-03-17 Personality Engine Benchmark Report
 
 **Model**: `gpt-5.4-mini-2026-03-17` (OpenAI) · **Test Date**: 2026-03-18  
 **Scripts**: `scripts/benchmark/test_gpt54mini_personas.py` + `test_gpt54mini_layer4.py`
