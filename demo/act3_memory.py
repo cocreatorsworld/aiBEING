@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 Act 3: Memory Changes Everything — EverMemOS Memory Injection
-=============================================================
+============================================================
 Proof: Injected memories are naturally integrated into responses
-about different topics.
+on different topics.
 
 Operation: Inject 3 memories → Talk about cats (trigger Dango) →
 talk about drinks (trigger coffee) → talk about fatigue (trigger running)
@@ -14,48 +14,48 @@ import websockets
 from demo_utils import *
 
 MESSAGES = [
-    ("团子今天又闯祸了，把我新买的数据线咬断了", "触发团子记忆"),
-    ("好累啊，想喝点什么提提神", "触发咖啡记忆"),
-    ("最近总是睡不好，有什么办法吗", "触发跑步记忆"),
+    ("Dango caused trouble again today and chewed through my new data cable.", "Trigger Dango memory"),
+    ("I'm so tired. What should I drink to perk myself up?", "Trigger coffee memory"),
+    ("I've been sleeping poorly lately. Is there anything I can do?", "Trigger running memory"),
 ]
 
 async def act3():
-    preflight("幕3: 记忆注入")
+    preflight("Act 3: Memory Injection")
 
     async with websockets.connect(WS_URL) as ws:
         await drain(ws)
 
-        log("═══ 幕3: 记忆改变一切 ═══", "EverMemOS 记忆注入")
+        log("═══ Act 3: Memory Changes Everything ═══", "EverMemOS memory injection")
 
-        # 重置 + Luna
-        await apply_scenario(ws, "calm_reset", "🧘 重置")
+        # Reset + Luna
+        await apply_scenario(ws, "calm_reset", "🧘 Reset")
         await switch_persona(ws, "luna")
         pause(2)
 
-        # ── 注入三条记忆 ──
-        log("── 注入三条记忆 ──")
-        await set_title("记忆注入")
-        await switch_tab(2)  # Tab 2: 记忆（看胶囊亮起）
-        await inject_memory(ws, "用户养了一只猫,名叫团子,经常调皮捣蛋,喜欢咬东西", "fact")
-        pause(3, "🐱 团子 亮起")
-        await inject_memory(ws, "用户喜欢喝美式咖啡,不加糖不加奶", "preference")
-        pause(3, "☕ 美式不加糖 亮起")
-        await inject_memory(ws, "用户有跑步习惯,跑完步睡眠质量会好很多", "preference")
-        pause(3, "🏃 跑步 亮起")
-        pause(8, "等待记忆生效")
+        # ── Inject three memories ──
+        log("── Inject Three Memories ──")
+        await set_title("Memory Injection")
+        await switch_tab(2)  # Tab 2: Memory (watch capsules light up)
+        await inject_memory(ws, "The user owns a cat named Dango who is mischievous and likes to chew on things", "fact")
+        pause(3, "🐱 Dango lights up")
+        await inject_memory(ws, "The user likes Americano coffee with no sugar or milk", "preference")
+        pause(3, "☕ Americano with no sugar or milk lights up")
+        await inject_memory(ws, "The user has a running habit and sleeps much better after running", "preference")
+        pause(3, "🏃 Running lights up")
+        pause(8, "Waiting for memories to take effect")
 
-        # ── 用不同话题触发不同记忆 ──
+        # ── Trigger different memories using different topics ──
         for i, (msg, hint) in enumerate(MESSAGES, 1):
             if abort_flag: break
-            log(f"── 话题{i}: {hint} ──")
-            await set_title(f"记忆融入 · {hint}")
-            await switch_tab(2)  # 留在记忆面板
+            log(f"── Topic {i}: {hint} ──")
+            await set_title(f"Memory Integration · {hint}")
+            await switch_tab(2)  # Stay on the memory panel
             await send_chat_and_wait(ws, msg, "luna")
-            pause(6, f"观众看记忆融入回复 — {hint}")
+            pause(6, f"Audience sees the memory integrated into the response — {hint}")
 
-        log("✅ 幕3完成", "三个话题分别触发不同记忆")
+        log("✅ Act 3 complete", "Three topics trigger three different memories")
 
-    save_results("幕3_记忆注入")
+    save_results("Act3_Memory_Injection")
 
 if __name__ == "__main__":
     asyncio.run(act3())
