@@ -2,475 +2,475 @@
   {
     "time": 0.0,
     "mmss": "0:00",
-    "action": "🎬 录制开始",
+    "action": "🎬 Recording started",
     "note": "00:47:30"
   },
   {
     "time": 2.0,
     "mmss": "0:02",
-    "action": "═══ 幕1: 人格差异 ═══",
-    "note": "同一句话，三个灵魂"
+    "action": "═══ Act 1: Personality Differences ═══",
+    "note": "The same words, three souls"
   },
   {
     "time": 2.0,
     "mmss": "0:02",
-    "action": "⏸️ 展示 DemoBar 全貌 (3s)",
+    "action": "⏸️ Show the full DemoBar view (3s)",
     "note": ""
   },
   {
     "time": 5.0,
     "mmss": "0:05",
-    "action": "🔄 切换角色 → luna",
+    "action": "🔄 Switch character → luna",
     "note": ""
   },
   {
     "time": 11.1,
     "mmss": "0:11",
-    "action": "✅ 角色就绪: luna",
+    "action": "✅ Character ready: luna",
     "note": ""
   },
   {
     "time": 13.1,
     "mmss": "0:13",
-    "action": "💬 发送: \"在干嘛呢？\"",
+    "action": "💬 Send: \"What are you doing?\"",
     "note": "→ luna"
   },
   {
     "time": 37.1,
     "mmss": "0:37",
-    "action": "✅ 回复完成 (24.0s)",
+    "action": "✅ Reply completed (24.0s)",
     "note": ""
   },
   {
     "time": 37.1,
     "mmss": "0:37",
-    "action": "   独白: \"真的够了，这个人到底是有什么毛病？还是在拿我做某种社交实验？虽然有点生气，但其实还觉得有点好笑，他怎\"",
+    "action": "   Inner monologue: \"I've really had enough. What is wrong with this person? Is he conducting some kind of social experiment on me? I'm a little angry, but it actually makes me laugh too. Ho\"",
     "note": ""
   },
   {
     "time": 37.1,
     "mmss": "0:37",
-    "action": "   温度=0.040",
+    "action": "   Temperature=0.040",
     "note": ""
   },
   {
     "time": 37.1,
     "mmss": "0:37",
-    "action": "⏸️ 观众看 Luna 回复 + 独白 (5s)",
+    "action": "⏸️ Audience views Luna's reply and inner monologue (5s)",
     "note": ""
   },
   {
     "time": 42.1,
     "mmss": "0:42",
-    "action": "🔄 切换角色 → vivian",
+    "action": "🔄 Switch character → vivian",
     "note": ""
   },
   {
     "time": 48.1,
     "mmss": "0:48",
-    "action": "✅ 角色就绪: vivian",
+    "action": "✅ Character ready: vivian",
     "note": ""
   },
   {
     "time": 50.1,
     "mmss": "0:50",
-    "action": "💬 发送: \"在干嘛呢？\"",
+    "action": "💬 Send: \"What are you doing?\"",
     "note": "→ vivian"
   },
   {
     "time": 68.1,
     "mmss": "1:08",
-    "action": "✅ 回复完成 (18.0s)",
+    "action": "✅ Reply completed (18.0s)",
     "note": ""
   },
   {
     "time": 68.1,
     "mmss": "1:08",
-    "action": "   独白: \"还没完没了了是吧。真行，这人的执着劲儿倒是比工作时候还有劲，我倒要看看他到底能发到什么时候。\"",
+    "action": "   Inner monologue: \"Again? Seriously. This person's determination is even greater than it is at work. I'd like to see how long he can keep sending messages.\"",
     "note": ""
   },
   {
     "time": 68.1,
     "mmss": "1:08",
-    "action": "   温度=0.015",
+    "action": "   Temperature=0.015",
     "note": ""
   },
   {
     "time": 68.1,
     "mmss": "1:08",
-    "action": "⏸️ 观众对比 Vivian 与 Luna (5s)",
+    "action": "⏸️ Audience compares Vivian with Luna (5s)",
     "note": ""
   },
   {
     "time": 73.1,
     "mmss": "1:13",
-    "action": "═══ 幕2: 记忆系统 ═══",
-    "note": "她记得你喜欢什么"
+    "action": "═══ Act 2: The Memory System ═══",
+    "note": "She remembers what you like"
   },
   {
     "time": 73.1,
     "mmss": "1:13",
-    "action": "🔄 切换角色 → luna",
+    "action": "🔄 Switch character → luna",
     "note": ""
   },
   {
     "time": 79.1,
     "mmss": "1:19",
-    "action": "✅ 角色就绪: luna",
+    "action": "✅ Character ready: luna",
     "note": ""
   },
   {
     "time": 81.1,
     "mmss": "1:21",
-    "action": "🧠 注入记忆: \"用户喜欢喝美式咖啡,不加糖不加奶\"",
+    "action": "🧠 Inject memory: \"The user likes Americano coffee, with no sugar or milk\"",
     "note": ""
   },
   {
     "time": 83.1,
     "mmss": "1:23",
-    "action": "✅ 记忆已注入",
+    "action": "✅ Memory injected",
     "note": ""
   },
   {
     "time": 83.1,
     "mmss": "1:23",
-    "action": "⏸️ 记忆注入确认 (2s)",
+    "action": "⏸️ Memory injection confirmation (2s)",
     "note": ""
   },
   {
     "time": 85.1,
     "mmss": "1:25",
-    "action": "💬 发送: \"帮我买杯咖啡呗\"",
+    "action": "💬 Send: \"Could you buy me a coffee?\"",
     "note": "→ luna"
   },
   {
     "time": 125.2,
     "mmss": "2:05",
-    "action": "✅ 回复完成 (40.0s)",
+    "action": "✅ Reply completed (40.0s)",
     "note": ""
   },
   {
     "time": 125.2,
     "mmss": "2:05",
-    "action": "   独白: \"他到底是有什么毛病啊，一会儿复读机一会儿又装作若无其事地要求我，真是让人火大又觉得好笑。不过既然提到\"",
+    "action": "   Inner monologue: \"What the hell is wrong with him? Sometimes he just repeats himself, and at other times he makes demands like nothing happened. It pisses me off and makes me laugh. Since he brought it u\"",
     "note": ""
   },
   {
     "time": 125.2,
     "mmss": "2:05",
-    "action": "   温度=0.040",
+    "action": "   Temperature=0.040",
     "note": ""
   },
   {
     "time": 125.2,
     "mmss": "2:05",
-    "action": "⏸️ 观众看 AI 是否提到美式不加糖 (5s)",
+    "action": "⏸️ Audience checks whether the AI mentions Americano with no sugar (5s)",
     "note": ""
   },
   {
     "time": 156.7,
     "mmss": "2:36",
-    "action": "═══ 幕3: 情绪积累 ═══",
-    "note": "⭐ 核心高潮"
+    "action": "═══ Act 3: Emotional Buildup ═══",
+    "note": "⭐ Core climax"
   },
   {
     "time": 156.7,
     "mmss": "2:36",
-    "action": "🎚️ 注入场景: 🧘 冷静重置",
+    "action": "🎚️ Inject scenario: 🧘 Calm Reset",
     "note": ""
   },
   {
     "time": 159.7,
     "mmss": "2:39",
-    "action": "✅ 场景已应用: 🧘 冷静重置",
+    "action": "✅ Scenario applied: 🧘 Calm Reset",
     "note": ""
   },
   {
     "time": 159.7,
     "mmss": "2:39",
-    "action": "⏸️ 观众看数值归零 (3s)",
+    "action": "⏸️ Audience watches the values reset to zero (3s)",
     "note": ""
   },
   {
     "time": 162.7,
     "mmss": "2:42",
-    "action": "💬 发送: \"在干嘛呢\"",
+    "action": "💬 Send: \"What are you doing?\"",
     "note": "→ luna"
   },
   {
     "time": 186.8,
     "mmss": "3:06",
-    "action": "✅ 回复完成 (24.0s)",
+    "action": "✅ Reply completed (24.0s)",
     "note": ""
   },
   {
     "time": 186.8,
     "mmss": "3:06",
-    "action": "   独白: \"这家伙简直是铁了心要跟我过不去，刚才不是刚点完咖啡吗？到底是真的脑子转不过弯来，还是单纯享受这种把我\"",
+    "action": "   Inner monologue: \"This guy is determined to go against me. Didn't he just finish ordering coffee a moment ago? Is he really that slow, or does he simply enjoy drivin\"",
     "note": ""
   },
   {
     "time": 186.8,
     "mmss": "3:06",
-    "action": "   温度=0.040",
+    "action": "   Temperature=0.040",
     "note": ""
   },
   {
     "time": 186.8,
     "mmss": "3:06",
-    "action": "⏸️ 对照：正常回复的挫败值 (3s)",
+    "action": "⏸️ Compare it with frustration in a normal response (3s)",
     "note": ""
   },
   {
     "time": 189.8,
     "mmss": "3:09",
-    "action": "😑 第1条敷衍",
+    "action": "😑 First perfunctory reply",
     "note": ""
   },
   {
     "time": 189.8,
     "mmss": "3:09",
-    "action": "💬 发送: \"嗯\"",
+    "action": "💬 Send: \"Mm\"",
     "note": "→ luna"
   },
   {
     "time": 217.8,
     "mmss": "3:37",
-    "action": "✅ 回复完成 (28.0s)",
+    "action": "✅ Reply completed (28.0s)",
     "note": ""
   },
   {
     "time": 217.8,
     "mmss": "3:37",
-    "action": "   独白: \"这人真是，喝到咖啡了就不能说句好听的吗？哪怕敷衍一下也好啊，真让人火大，可又有点想笑，这人怎么就能这\"",
+    "action": "   Inner monologue: \"What is wrong with this person? Now that I've gotten you coffee, can’t you say something nice? Even a perfunctory reply would be fine. It's infuriating, but I find it a bit funny—why are yo\"",
     "note": ""
   },
   {
     "time": 217.8,
     "mmss": "3:37",
-    "action": "   温度=0.061",
+    "action": "   Temperature=0.061",
     "note": ""
   },
   {
     "time": 217.8,
     "mmss": "3:37",
-    "action": "⏸️ 观众看第1条敷衍后数值变化 (4s)",
+    "action": "⏸️ Audience watches the value change after the first perfunctory reply (4s)",
     "note": ""
   },
   {
     "time": 221.8,
     "mmss": "3:41",
-    "action": "😑 第2条敷衍",
+    "action": "😑 Second perfunctory reply",
     "note": ""
   },
   {
     "time": 221.8,
     "mmss": "3:41",
-    "action": "💬 发送: \"哦\"",
+    "action": "💬 Send: \"Oh\"",
     "note": "→ luna"
   },
   {
     "time": 247.8,
     "mmss": "4:07",
-    "action": "✅ 回复完成 (26.0s)",
+    "action": "✅ Reply completed (26.0s)",
     "note": ""
   },
   {
     "time": 247.8,
     "mmss": "4:07",
-    "action": "   独白: \"这人到底在搞什么鬼？我刚给他点了咖啡，结果他回我个“哦”？这种感觉就像是在和一面墙说话，哪怕墙还会回\"",
+    "action": "   Inner monologue: \"What on earth is this person doing? I just ordered coffee for him, and he replies with 'oh'? It feels like talking to a wall—at least a wall might even response\"",
     "note": ""
   },
   {
     "time": 247.8,
     "mmss": "4:07",
-    "action": "   温度=0.112",
+    "action": "   Temperature=0.112",
     "note": ""
   },
   {
     "time": 247.8,
     "mmss": "4:07",
-    "action": "⏸️ 观众看第2条敷衍后数值变化 (4s)",
+    "action": "⏸️ Audience watches the value change after the second perfunctory reply (4s)",
     "note": ""
   },
   {
     "time": 251.8,
     "mmss": "4:11",
-    "action": "😑 第3条敷衍",
+    "action": "😑 Third perfunctory reply",
     "note": ""
   },
   {
     "time": 251.8,
     "mmss": "4:11",
-    "action": "💬 发送: \"嗯嗯\"",
+    "action": "💬 Send: \"Mmhmm\"",
     "note": "→ luna"
   },
   {
     "time": 277.8,
     "mmss": "4:37",
-    "action": "✅ 回复完成 (26.0s)",
+    "action": "✅ Reply completed (26.0s)",
     "note": ""
   },
   {
     "time": 277.8,
     "mmss": "4:37",
-    "action": "   独白: \"这人到底是怎么回事……有时候觉得他像是在故意气我，有时候又觉得他可能只是单纯的社交无能。好吧，Lun\"",
+    "action": "   Inner monologue: \"What is wrong with this person... Sometimes I think he's deliberately trying to annoy me, and sometimes I wonder if he simply has no social skills. Fine, Lun\"",
     "note": ""
   },
   {
     "time": 277.8,
     "mmss": "4:37",
-    "action": "   温度=0.168",
+    "action": "   Temperature=0.168",
     "note": ""
   },
   {
     "time": 277.8,
     "mmss": "4:37",
-    "action": "⏸️ 观众看第3条敷衍后数值变化 (4s)",
+    "action": "⏸️ Audience watches the value change after the third perfunctory reply (4s)",
     "note": ""
   },
   {
     "time": 281.8,
     "mmss": "4:41",
-    "action": "😑 第4条敷衍（可能触发相变）",
+    "action": "😑 Fourth perfunctory reply (may trigger a phase transition)",
     "note": ""
   },
   {
     "time": 281.8,
     "mmss": "4:41",
-    "action": "💬 发送: \"嗯\"",
+    "action": "💬 Send: \"Mm\"",
     "note": "→ luna"
   },
   {
     "time": 307.9,
     "mmss": "5:07",
-    "action": "✅ 回复完成 (26.0s)",
+    "action": "✅ Reply completed (26.0s)",
     "note": ""
   },
   {
     "time": 307.9,
     "mmss": "5:07",
-    "action": "   独白: \"这家伙简直是个只会发单字音节的复读机，真是够了，虽然有点想笑，但他这种有一搭没一搭的回话风格真的很让\"",
+    "action": "   Inner monologue: \"This guy is a repeating machine that only knows how to send one-syllable words. I've really had enough. It's a little funny, but his on-and-off replying style is really anno\"",
     "note": ""
   },
   {
     "time": 307.9,
     "mmss": "5:07",
-    "action": "   温度=0.191",
+    "action": "   Temperature=0.191",
     "note": ""
   },
   {
     "time": 307.9,
     "mmss": "5:07",
-    "action": "⏸️ 观众看可能的情绪爆发 (5s)",
+    "action": "⏸️ Audience watches for a possible emotional outburst (5s)",
     "note": ""
   },
   {
     "time": 315.9,
     "mmss": "5:15",
-    "action": "═══ 幕4: 主动消息 ═══",
-    "note": "她会主动找你"
+    "action": "═══ Act 4: Proactive Messages ═══",
+    "note": "She will start the conversation"
   },
   {
     "time": 315.9,
     "mmss": "5:15",
-    "action": "🎚️ 注入场景: 💥 即将爆发",
+    "action": "🎚️ Inject scenario: 💥 About to Erupt",
     "note": ""
   },
   {
     "time": 318.9,
     "mmss": "5:18",
-    "action": "✅ 场景已应用: 💥 即将爆发",
+    "action": "✅ Scenario applied: 💥 About to Erupt",
     "note": ""
   },
   {
     "time": 318.9,
     "mmss": "5:18",
-    "action": "⏸️ 观众看挫败值跳变 (3s)",
+    "action": "⏸️ Audience watches the frustration value jump (3s)",
     "note": ""
   },
   {
     "time": 321.9,
     "mmss": "5:21",
-    "action": "⏩ 时间跳跃: +4h",
+    "action": "⏩ Time jump: +4h",
     "note": ""
   },
   {
     "time": 324.9,
     "mmss": "5:24",
-    "action": "✅ 时间跳跃完成",
+    "action": "✅ Time jump completed",
     "note": ""
   },
   {
     "time": 326.9,
     "mmss": "5:26",
-    "action": "⏳ 等待主动消息 (最多30s)...",
+    "action": "⏳ Waiting for a proactive message (up to 30s)...",
     "note": ""
   },
   {
     "time": 357.0,
     "mmss": "5:57",
-    "action": "⏰ 超时 — 未触发主动消息",
+    "action": "⏰ Timeout — no proactive message triggered",
     "note": ""
   },
   {
     "time": 357.0,
     "mmss": "5:57",
-    "action": "⚠️ 第一次未触发，再跳 4h 重试",
+    "action": "⚠️ First attempt failed; jump ahead another 4h and retry",
     "note": ""
   },
   {
     "time": 357.0,
     "mmss": "5:57",
-    "action": "⏩ 时间跳跃: +4h",
+    "action": "⏩ Time jump: +4h",
     "note": ""
   },
   {
     "time": 360.0,
     "mmss": "6:00",
-    "action": "✅ 时间跳跃完成",
+    "action": "✅ Time jump completed",
     "note": ""
   },
   {
     "time": 360.0,
     "mmss": "6:00",
-    "action": "⏳ 等待主动消息 (最多30s)...",
+    "action": "⏳ Waiting for a proactive message (up to 30s)...",
     "note": ""
   },
   {
     "time": 390.0,
     "mmss": "6:30",
-    "action": "⏰ 超时 — 未触发主动消息",
+    "action": "⏰ Timeout — no proactive message triggered",
     "note": ""
   },
   {
     "time": 390.0,
     "mmss": "6:30",
-    "action": "⚠️ 未触发主动消息 — 可手动展示时间跳跃效果",
+    "action": "⚠️ No proactive message triggered — the time-jump effect can be demonstrated manually",
     "note": ""
   },
   {
     "time": 397.6,
     "mmss": "6:37",
-    "action": "═══ 幕5: 技术底层 ═══",
-    "note": "引擎全景展示"
+    "action": "═══ Act 5: Underlying Technology ═══",
+    "note": "Overview of the engine"
   },
   {
     "time": 397.6,
     "mmss": "6:37",
-    "action": "⏸️ 请手动滚动开发面板展示各区域 (15s)",
+    "action": "⏸️ Manually scroll through the developer panel to show each section (15s)",
     "note": ""
   },
   {
     "time": 397.6,
     "mmss": "6:37",
-    "action": "⏸️ 手动滚动开发面板 (15s)",
+    "action": "⏸️ Manually scroll through the developer panel (15s)",
     "note": ""
   },
   {
     "time": 412.6,
     "mmss": "6:52",
-    "action": "✅ 幕5完成",
+    "action": "✅ Act 5 completed",
     "note": ""
   }
 ]
