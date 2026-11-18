@@ -3,17 +3,17 @@ import SwiftUI
 // MARK: - Act Mode
 
 enum DemoActMode: String, CaseIterable {
-    case personas = "人格对比"
-    case memory   = "记忆注入"
-    case emotion  = "压力来源"
-    case time     = "时间关系"
+    case personas = "Persona Comparison"
+    case memory   = "Memory Injection"
+    case emotion  = "Sources of Pressure"
+    case time     = "Time & Relationships"
 }
 
 // MARK: - DemoShowcasePanel
 
 /// Audience-facing showcase panel for video recording.
 /// Clean, cinematic — no operator controls, only live state visualization.
-/// ⌘S toggles visibility. Mode switches with ⌘1–4 or via DemoBar.
+/// Press ⌘S to toggle visibility. Switch modes with ⌘1–4 or via the DemoBar.
 struct DemoShowcasePanel: View {
     @EnvironmentObject var appState: AppState
 
