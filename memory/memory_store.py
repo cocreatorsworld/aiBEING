@@ -47,15 +47,15 @@ class MemoryStore:
         self._conn = sqlite3.connect(db_path, check_same_thread=False)
         self._conn.row_factory = sqlite3.Row
         self._create_tables()
-        print(f"✓ 记忆存储: {db_path}")
+        print(f"✓ Memory storage: {db_path}")
 
     def _create_tables(self):
         self._conn.executescript("""
             CREATE TABLE IF NOT EXISTS memories (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id TEXT NOT NULL,
-                persona_id TEXT NOT NULL,
-                content TEXT NOT NULL,
+                user_id TEXT NOT NOT,
+                persona_id TEXT NOT NOT,
+                content TEXT NOT NOT,
                 category TEXT DEFAULT 'conversation',
                 importance REAL DEFAULT 0.5,
                 source_turn INTEGER DEFAULT 0,
@@ -109,11 +109,11 @@ class MemoryStore:
     ) -> None:
         """Add extracted facts as high-importance memories."""
         fact_labels = {
-            "user_name": "用户的名字是",
-            "birthday": "用户的生日是",
-            "location": "用户在",
-            "pet": "用户养了",
-            "food_preference": "用户喜欢",
+            "user_name": "The user's name is ",
+            "birthday": "The user's birthday is ",
+            "location": "The user is in ",
+            "pet": "The user has ",
+            "food_preference": "The user likes ",
         }
         for key, value in facts.items():
             label = fact_labels.get(key, key)
