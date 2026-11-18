@@ -1,49 +1,49 @@
-# TTS 旁白脚本 — 带时间码
+# TTS Voiceover Script — With Timestamps
 
-> 根据实际录制时间自动生成，可直接用于 TTS 音频制作
+> Automatically generated based on actual recording time; ready for TTS audio production
 
-## [0:02] 
-这是 OpenHer，一个开源的人格引擎。每个 AI 角色都有自己的内心世界、情绪波动、和主动找你聊天的欲望。上方是演示控制台，右侧是引擎的实时状态。
+## [0:02]  
+This is OpenHer, an open-source personality engine. Every AI character has her own inner world, fluctuates emotionally, and may proactively initiate a conversation with you. The demo console is above, and the real-time engine status is displayed on the right. […]
 
-## [0:11] 
-现在是 Luna，一个温柔的 INFP 女孩。
+## [0:11]  
+Now, meet Luna: a gentle INFP girl.
 
-## [0:48] 
-切换到 Vivian，一个冷峻的 ENTJ 职场女性。
+## [0:48]  
+Switching to Vivian, a cool and composed ENTJ professional woman.
 
-## [1:13] 
-第二个特性：长期记忆。
+## [1:13]  
+The second feature: long-term memory.
 
-## [1:23] 
-我给 AI 注入了一条记忆：用户喜欢美式咖啡，不加糖。
+## [1:23]  
+I have injected one memory into the AI: the user likes Americano coffee without sugar.
 
-## [2:36] 
-第三个特性，也是核心技术：情绪积累与相变。
+## [2:36]  
+The third feature—and the core technology—is emotional accumulation and phase transition.
 
-## [2:36] 
-先把所有情绪值清零，回到平静基线。
+## [2:36]  
+First, reset all emotional values to zero and return to the calm baseline.
 
-## [3:09] 
-现在连续发敷衍消息，注意看右侧面板的挫败值和温度变化。
+## [3:09]  
+Now send several dismissive messages in a row, and watch the frustration value and temperature changes on the right-side panel.
 
-## [4:11] 
-第三条敷衍。注意内心独白和回复的落差——嘴上说的和心里想的可能完全不同。这就是两通道人格引擎的核心。
+## [4:11]  
+This is the third dismissive message. Notice the contrast between the inner monologue and the response—the words spoken and the thoughts within may be completely different. This is the core of the two-channel personality engine.
 
-## [4:41] 
-继续敷衍，AI 的态度可能发生相变。
+## [4:41]  
+Continue sending dismissive messages. The AI’s attitude may undergo a phase transition.
 
-## [5:15] 
-最后一个关键特性：AI 会主动找你。
+## [5:15]  
+The final key feature: the AI will proactively reach out to you.
 
-## [5:15] 
-把联结需求的挫败值拉到临界点。
+## [5:15]  
+Raise the frustration value for the connection need to a critical point.
 
-## [5:26] 
-现在什么都不做，等待引擎内部驱动力触发行动。
+## [5:26]  
+Now do nothing and wait for the engine’s internal drives to trigger an action.
 
-## [6:37] 
-右侧是人格引擎的完整可视化。25维输入、24维隐层、8维行为信号、5个驱动力、热力学代谢。所有这些构成了一个有内在生命的数字人格。这就是 OpenHer。
+## [6:37]  
+On the right is the complete visualization of the personality engine: 25-dimensional input, 24 hidden dimensions, 8 behavioral signals, 5 drives, and thermodynamic metabolism. Together, these form a digital personality with an inner life. This is OpenHer. […]
 
 ---
 
-总时长: 6:52
+**Total duration: 6:52**
