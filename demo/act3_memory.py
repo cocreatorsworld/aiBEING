@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """
-幕3: 记忆改变一切 — EverMemOS 记忆注入
-========================================
-证明: 注入的记忆被自然融入不同话题的回复中
+Act 3: Memory Changes Everything — EverMemOS Memory Injection
+=============================================================
+Proof: Injected memories are naturally integrated into responses
+about different topics.
 
-操作: 注入3条记忆 → 聊猫(触发团子) → 聊饮料(触发咖啡) → 聊疲倦(触发跑步)
+Operation: Inject 3 memories → Talk about cats (trigger Dango) →
+talk about drinks (trigger coffee) → talk about fatigue (trigger running)
 """
 import asyncio, sys, os
 sys.path.insert(0, os.path.dirname(__file__))
